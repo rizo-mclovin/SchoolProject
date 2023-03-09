@@ -1,26 +1,72 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>New book</title>
-</head>
-<body>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Электронная библиотека</title>
+    <link rel="stylesheet" href="../../style.css" />
+  </head>
+  <body>
+    <div class="main-screen">
+      <h1 class="logo">Электронная библиотека</h1>
+      <form
+        class="form"
+        th:method="POST"
+        th:action="@{/books}"
+        th:object="${book}"
+      >
+        <div class="input-field">
+          <label for="title" class="input-field__label">Название</label>
+          <input
+            class="input-field__input"
+            type="text"
+            th:field="*{title}"
+            id="title"
+          />
+          <div
+            class="error"
+            th:if="${#fields.hasErrors('title')}"
+            th:errors="*{title}"
+          >
+            Введите название
+          </div>
+        </div>
 
-<form th:method="POST" th:action="@{/books}" th:object="${book}">
-    <label for="title">Введите название книги: </label>
-    <input type="text" th:field="*{title}" id="title"/>
-    <div style="color:red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title Error</div>
-    <br/>
-    <label for="author">Введите автора: </label>
-    <input type="text" th:field="*{author}" id="author"/>
-    <div style="color:red" th:if="${#fields.hasErrors('author')}" th:errors="*{author}">Author Error</div>
-    <br/>
-    <label for="year">Введите год: </label>
-    <input type="text" th:field="*{year}" id="year"/>
-    <div style="color:red" th:if="${#fields.hasErrors('year')}" th:errors="*{year}">Year Error</div>
-    <br/>
-    <input type="submit" value="Создать!"/>
-</form>
+        <div class="input-field">
+          <label for="author" class="input-field__label">Автор</label>
+          <input
+            class="input-field__input"
+            type="text"
+            th:field="*{author}"
+            id="author"
+          />
+          <div
+            class="error"
+            th:if="${#fields.hasErrors('author')}"
+            th:errors="*{author}"
+          >
+            Введите автора
+          </div>
+        </div>
 
-</body>
+        <div class="input-field">
+          <label for="year" class="input-field__label">Год</label>
+          <input
+            class="input-field__input"
+            type="text"
+            th:field="*{year}"
+            id="year"
+          />
+          <div
+            class="error"
+            th:if="${#fields.hasErrors('year')}"
+            th:errors="*{year}"
+          >
+            Введите год
+          </div>
+        </div>
+
+        <button type="submit" class="btn">Создать</button>
+      </form>
+    </div>
+  </body>
 </html>

@@ -1,19 +1,43 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Изменения данных студента</title>
-</head>
-<body>
-<form th:action="@{/students/edit/{id}(id=${student.getId()})}" th:method="PATCH" th:object="${student}">
-    <label for="fullStudentName">ФИО ученика: </label>
-    <input type="text" th:field="*{fullStudentName}" id="fullStudentName">
-    <br>
-    <!--    <div style="color: red" th:if="${#fields.hasErrors('fullStudentName')}" th:errors="*{fullStudentName}">Error Name</div>-->
-    <label for="className">Класс: </label>
-    <input type="text" th:field="*{className}" id="className">
-    <!--    <div style="color: red" th:if="${#fields.hasErrors('className')}" th:errors="*{className}">ClassName Error</div>-->
-    <input type="submit" value="Update">
-</form>
-</body>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Электронная библиотека</title>
+    <link rel="stylesheet" href="../../style.css" />
+  </head>
+  <body>
+    <div class="main-screen">
+      <h1 class="logo">Электронная библиотека</h1>
+      <form
+        class="form"
+        th:action="@{/students/edit/{id}(id=${student.getId()})}"
+        th:method="PATCH"
+        th:object="${student}"
+      >
+        <div class="input-field">
+          <label class="input-field__label" for="fullStudentName"
+            >ФИО ученика:
+          </label>
+          <input
+            class="input-field__input"
+            type="text"
+            th:field="*{fullStudentName}"
+            id="fullStudentName"
+          />
+        </div>
+        <!--    <div style="color: red" th:if="${#fields.hasErrors('fullStudentName')}" th:errors="*{fullStudentName}">Error Name</div>-->
+        <div class="input-field">
+          <label class="input-field__label" for="className">Класс: </label>
+          <input
+            class="input-field__input"
+            type="text"
+            th:field="*{className}"
+            id="className"
+          />
+        </div>
+        <!--    <div style="color: red" th:if="${#fields.hasErrors('className')}" th:errors="*{className}">ClassName Error</div>-->
+        <button type="submit" class="btn">Обновить</button>
+      </form>
+    </div>
+  </body>
 </html>

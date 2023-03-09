@@ -1,130 +1,84 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Show</title>
-    <style>
-        *{
-            background-color: #202121;
-        }
+    <title>Электронная библиотека</title>
+    <link rel="stylesheet" href="../../style.css" />
+  </head>
+  <body>
+    <div class="main-screen">
+      <h1 class="logo">Электронная библиотека</h1>
+      <div class="info">
+        <div class="info__item">
+          <h3>Название:</h3>
+          <span th:text="${book.getTitle()} "></span>
+        </div>
+        <div class="info__item">
+          <h3>Автор:</h3>
+          <span th:text="${book.getAuthor()} "></span>
+        </div>
+        <div class="info__item">
+          <h3>Год издания:</h3>
+          <span th:text="${book.getYear()} "></span>
+        </div>
+      </div>
 
-        .btn{
-            border: none;
-            border-radius: 5px;
-            color: #868786;
-            background-color: #373838;
-            text-align: center;
-            font-size: 1rem;
-            padding: 0.375rem 4.25rem;
-            line-height: 1.5;
-            margin-top: 30px;
-            /*margin-left: 530px;*/
-        }
+      <div class="book-owner" th:if="${owner}">
+        <span>Книга сейчас у: </span>
+        <span th:text="${owner.getFullStudentName()}">Person Name</span>
 
-        .btn:hover{
-            background-color: #868786;
-            color: #373838;
-        }
+        <form
+          class="book-owner__form"
+          th:method="PATCH"
+          th:action="@{/books/{id}/release(id=${book.getBook_id()})}"
+        >
+          <button type="submit" class="btn">Освободить книгу</button>
+        </form>
+      </div>
 
-        .input_field{
-            border-radius: 10px;
-            height: 15px;
-            padding:10px;
-            font-size: 15px;
-            border-color: #3b3838;
-            border-style: solid;
-            width: 300px;
-            margin-bottom: 1px;
-            /*margin-left: 450px;*/
-            color: white;
-        }
+      <div th:if="${students}">
+        <form
+          class="book-owner__form"
+          th:method="PATCH"
+          th:action="@{/books/{id}/assign(id=${book.getBook_id()})}"
+        >
+          <div class="input-field">
+            <label class="input-field__label" for="student"
+              >Эта книга свободна. Кому назначить ее?</label
+            >
+            <select
+              class="input-field__input"
+              th:object="${student}"
+              th:field="*{id}"
+              id="student"
+            >
+              <option
+                th:each="student : ${students}"
+                th:value="${student.getId()}"
+                th:text="${student.getFullStudentName()}"
+              ></option>
+            </select>
+          </div>
+          <button type="submit" class="btn book-owner__btn">
+            Назначить книгу
+          </button>
+        </form>
+      </div>
 
-        .p{
-            /*margin-left: 460px;*/
-            margin-bottom: 5px;
-            color: #a0a2a0;
-            font-size: 20px;
-            font-family: "Apple Symbols";
-        }
+      <form
+        th:method="GET"
+        th:action="@{/books/{id}/edit(id=${book.getBook_id()})}"
+      >
+        <button type="submit" class="btn btn--outline">Редактировать</button>
+      </form>
 
-        .btnToSignup{
-            border: none;
-            border-radius: 5px;
-            color: #a0a2a0;
-            background-color: #373838;
-            text-align: center;
-            font-size: 1rem;
-            padding: 0.1rem 1.25rem;
-            line-height: 1.5;
-            margin-top: 10px;
-            /*margin-left: 499px;*/
-        }
-
-        .btnToSignup:hover{
-            background-color: #a0a2a0;
-            color: #373838;
-        }
-
-
-        .or{
-            text-align: center;
-            color: #a0a2a0;
-        }
-
-        .login{
-            text-align: center;
-            color: #a0a2a0;
-        }
-
-        .error{
-            text-align: center;
-            font-family: "Devanagari Sangam MN";
-            font-size: 20px;
-        }
-
-
-    </style>
-
-</head>
-<body>
-<h3 style="color:white;"><strong>Название: </strong></h3> <p style="color: white" th:text="${book.getTitle()} "></p>
-<h3 style="color:white;"><strong>Автор: </strong></h3> <p style="color: white" th:text="${book.getAuthor()} "></p>
-<h3 style="color:white;"><strong>Год издания: </strong></h3> <p style="color: white" th:text="${book.getYear()} "></p>
-
-
-<div th:if="${owner}">
-    <span style="color:white;"><strong>Книга сейчас у:</strong> </span> <span style="color: white" th:text="${owner.getFullStudentName()}">Person Name</span>
-
-    <form th:method="PATCH" th:action="@{/books/{id}/release(id=${book.getBook_id()})}">
-        <input class="btn" type="submit" value="Освободить книгу"/>
-    </form>
-</div>
-<br>
-<br>
-
-<div th:if="${students}">
-    <span style="color: white">Эта книга свободна. Кому назначить ее?</span>
-    <br>
-    <form th:method="PATCH" th:action="@{/books/{id}/assign(id=${book.getBook_id()})}">
-        <label style="color: white" for="student">Выберите человека</label>
-        <select th:object="${student}" th:field="*{id}" id="student">
-            <option th:each="student : ${students}" th:value="${student.getId()}" th:text="${student.getFullStudentName()}">
-            </option>
-        </select>
-        <input class="btnToSignup" type="submit" value="Назначить книгу"/>
-    </form>
-</div>
-
-<hr/>
-
-<form th:method="GET" th:action="@{/books/{id}/edit(id=${book.getBook_id()})}" style="text-align: center">
-    <input class="btn" type="submit" value="Редактировать"/>
-</form>
-
-<form th:method="DELETE" th:action="@{/books/{id}/delete(id=${book.getBook_id()})}" style="text-align: center">
-    <input class="btn" type="submit" value="Удалить"/>
-</form>
-
-</body>
+      <form
+        th:method="DELETE"
+        th:action="@{/books/{id}/delete(id=${book.getBook_id()})}"
+      >
+        <button type="submit" class="btn btn--error">Удалить</button>
+      </form>
+    </div>
+  </body>
 </html>

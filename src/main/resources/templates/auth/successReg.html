@@ -1,38 +1,16 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-    <style>
-        *{
-            background-color: #171818;
-        }
-        h2, h3{
-            /*text-align: center;*/
-            color: #868786;
-        }
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Электронная библиотека</title>
+    <link rel="stylesheet" href="../style.css" />
+  </head>
+  <body>
+    <div class="main-screen">
+      <h1 class="logo">Электронная библиотека</h1>
+      <h2 class="main-screen__subtitle">Вы успешно зарегистрированы!</h2>
 
-        .btn{
-            border: none;
-            border-radius: 5px;
-            color: #868786;
-            background-color: #373838;
-            text-align: center;
-            font-size: 1rem;
-            padding: 0.375rem 4.25rem;
-            line-height: 1.5;
-            margin-top: 30px;
-        }
-
-    </style>
-</head>
-<body>
-
-<form action="/auth/login" method="get" style="text-align: center">
-    <h2>Вы успешно зарегестрированы!</h2>
-     <h3>Теперь осталось войти</h3>
-
-    <input class="btn" type="submit" value="Аутентификация">
-</form>
-</body>
+      <a href="/auth/login" class="btn">Войти в аккаунт</a>
+    </div>
+  </body>
 </html>
