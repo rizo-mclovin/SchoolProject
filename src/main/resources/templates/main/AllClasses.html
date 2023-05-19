@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Электронная библиотека</title>
+    <link rel="stylesheet" href="../style.css" />
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+
+      :root {
+        --color-white: #fff;
+        --color-grey-400: #ced4da;
+        --color-grey-600: #868e96;
+        --color-red-600: #fa5252;
+        --color-red-700: #f03e3e;
+        --color-primary: #38d9a9;
+        --color-primary-shade-100: #32c398;
+        --color-black: #333;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        font-size: 62.5%;
+      }
+
+      body {
+        font-family: 'Open Sans', sans-serif;
+        color: var(--color-black);
+        line-height: 1;
+      }
+
+      input,
+      button {
+        font-family: inherit;
+      }
+
+      input {
+        color: inherit;
+      }
+
+
+      .logo {
+        padding: 2rem;
+        font-size: 4rem;
+        background-color: var(--color-primary);
+        color: var(--color-white);
+        border-radius: 0 8px;
+      }
+
+
+
+      .btn {
+        display: inline-block;
+        padding: 1rem 2.4rem;
+        font-size: 2rem;
+        background-color: var(--color-primary);
+        color: var(--color-white);
+        text-decoration: none;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .btn:hover {
+        background-color: var(--color-primary-shade-100);
+      }
+
+
+
+      .main-screen {
+        max-width: 80rem;
+        margin: 16rem auto 0;
+        padding: 4rem;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 3.2rem;
+      }
+
+      .main-screen__subtitle {
+        font-size: 3.2rem;
+      }
+
+      .order {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+      }
+
+      .order__link {
+        font-size: 2rem;
+        color: var(--color-black);
+        text-decoration: none;
+      }
+
+      .order__link:hover {
+        text-decoration: underline;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="main-screen">
+      <h1 class="logo">Электронная библиотека</h1>
+      <h2 class="main-screen__subtitle">Ученики МБОУ Средней Школы №66</h2>
+
+      <div class="order" th:each="student : ${students}">
+        <a
+          class="order__link"
+          th:href="@{/students/{id}(id=${student.getId()})}"
+          th:text="${student.getFullStudentName()} "
+        ></a>
+      </div>
+
+      <a href="/students/add" class="btn">Добавить нового ученика</a>
+    </div>
+  </body>
+</html>

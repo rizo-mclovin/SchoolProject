@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Электронная библиотека</title>
+    <link rel="stylesheet" href="../../style.css" />
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+
+      :root {
+        --color-white: #fff;
+        --color-grey-400: #ced4da;
+        --color-grey-600: #868e96;
+        --color-red-600: #fa5252;
+        --color-red-700: #f03e3e;
+        --color-primary: #38d9a9;
+        --color-primary-shade-100: #32c398;
+        --color-black: #333;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        font-size: 62.5%;
+      }
+
+      body {
+        font-family: 'Open Sans', sans-serif;
+        color: var(--color-black);
+        line-height: 1;
+      }
+
+      input,
+      button {
+        font-family: inherit;
+      }
+
+      input {
+        color: inherit;
+      }
+
+
+      .logo {
+        padding: 2rem;
+        font-size: 4rem;
+        background-color: var(--color-primary);
+        color: var(--color-white);
+        border-radius: 0 8px;
+      }
+
+      .form {
+        margin-top: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 1rem 2.4rem;
+        font-size: 2rem;
+        background-color: var(--color-primary);
+        color: var(--color-white);
+        text-decoration: none;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .btn:hover {
+        background-color: var(--color-primary-shade-100);
+      }
+      .input-field {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+      }
+
+      .input-field__label {
+        font-size: 1.6rem;
+        text-align: center;
+      }
+
+      .input-field__input {
+        padding: 0.6rem 1.2rem;
+        font-size: 2rem;
+        border: 1px solid var(--color-grey-400);
+        border-radius: 4px;
+        transition: border-color 0.3s;
+      }
+
+      .input-field__input:focus {
+        outline: none;
+        border-color: var(--color-grey-600);
+      }
+      .main-screen {
+        max-width: 80rem;
+        margin: 16rem auto 0;
+        padding: 4rem;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 3.2rem;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="main-screen">
+      <h1 class="logo">Электронная библиотека</h1>
+      <form
+        class="form"
+        th:action="@{/students/edit/{id}(id=${student.getId()})}"
+        th:method="PATCH"
+        th:object="${student}">
+        <div class="input-field">
+          <label class="input-field__label" for="fullStudentName"
+            >ФИО ученика:
+          </label>
+          <input
+            class="input-field__input"
+            type="text"
+            th:field="*{fullStudentName}"
+            id="fullStudentName"/>
+        </div>
+        <!--    <div style="color: red" th:if="${#fields.hasErrors('fullStudentName')}" th:errors="*{fullStudentName}">Error Name</div>-->
+        <div class="input-field">
+          <label class="input-field__label" for="className">Класс: </label>
+          <input
+            class="input-field__input"
+            type="text"
+            th:field="*{className}"
+            id="className"
+          />
+        </div>
+        <!--    <div style="color: red" th:if="${#fields.hasErrors('className')}" th:errors="*{className}">ClassName Error</div>-->
+        <button type="submit" class="btn">Обновить</button>
+      </form>
+    </div>
+  </body>
+</html>

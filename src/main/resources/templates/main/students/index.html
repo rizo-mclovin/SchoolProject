@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="https://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Электронная библиотека</title>
+    <link rel="stylesheet" href="../../style.css" />
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+
+      :root {
+        --color-white: #fff;
+        --color-grey-400: #ced4da;
+        --color-grey-600: #868e96;
+        --color-red-600: #fa5252;
+        --color-red-700: #f03e3e;
+        --color-primary: #38d9a9;
+        --color-primary-shade-100: #32c398;
+        --color-black: #333;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        font-size: 62.5%;
+      }
+
+      body {
+        font-family: 'Open Sans', sans-serif;
+        color: var(--color-black);
+        line-height: 1;
+      }
+
+      input,
+      button {
+        font-family: inherit;
+      }
+
+      input {
+        color: inherit;
+      }
+
+      .logo {
+        padding: 2rem;
+        font-size: 4rem;
+        background-color: var(--color-primary);
+        color: var(--color-white);
+        border-radius: 0 8px;
+      }
+
+
+      .btn {
+        display: inline-block;
+        padding: 1rem 2.4rem;
+        font-size: 2rem;
+        background-color: var(--color-primary);
+        color: var(--color-white);
+        text-decoration: none;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .btn:hover {
+        background-color: var(--color-primary-shade-100);
+      }
+
+
+      .btn--error {
+        background-color: var(--color-red-600);
+      }
+
+      .btn--error:hover {
+        background-color: var(--color-red-700);
+      }
+
+
+      .main-screen {
+        max-width: 80rem;
+        margin: 16rem auto 0;
+        padding: 4rem;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 3.2rem;
+      }
+
+
+      .book-owner {
+        margin-top: 2rem;
+        font-size: 2rem;
+      }
+
+
+      .info {
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+      }
+
+      .info__item {
+        font-size: 1.6rem;
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .table__item {
+        font-size: 2rem;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="main-screen">
+      <h1 class="logo">Электронная библиотека</h1>
+      <div class="info">
+        <div class="info__item">
+          <h3>ФИО Ученика:</h3>
+          <p th:text="${student.getFullStudentName()}"></p>
+        </div>
+        <div class="info__item">
+          <h3>Класс:</h3>
+          <p th:text="${student.getClassName()}"></p>
+        </div>
+      </div>
+
+      <div th:if="${books.isEmpty()}">
+        <p class="book-owner">Ученик не взял ни одной книги</p>
+      </div>
+
+      <div th:if="${!books.isEmpty()}">
+        <p class="book-owner">Книги</p>
+        <table class="table" th:each="book : ${books}">
+          <tr>
+            <td>
+              <span
+                class="table__item"
+                th:text="${book.getTitle()} + ', ' + ${book.getAuthor()} + ', ' + ${book.getYear()}"
+                th:style="${book.isExpired()} ? 'color: red': 'color: black'"
+              ></span>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <form
+        th:method="GET"
+        th:action="@{/students/{id}/edit(id=${student.getId()})}"
+      >
+        <button type="submit" class="btn">Редактировать</button>
+      </form>
+
+      <form
+        th:method="DELETE"
+        th:action="@{/students/{id}(id=${student.getId()})}"
+      >
+        <button type="submit" class="btn btn--error">Удалить</button>
+      </form>
+    </div>
+  </body>
+</html>
